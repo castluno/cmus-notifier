@@ -22,7 +22,7 @@ mkdir -p "$HOME/.cn-dont-delete"
 # cloning files from the repository
 cp "cmus-notifier/controller.sh" "$HOME/.cn-dont-delete"
 cp "cmus-notifier/notifier.sh" "$HOME/.cn-dont-delete"
-cp "cmus-notifier/readme-indir.txt" "$HOME/.cn-dont-delete/readme.txt"
+cp "cmus-notifier/readme_indir.txt" "$HOME/.cn-dont-delete/readme.txt"
 
 rm -rf "cmus-notifier"
 
