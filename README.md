@@ -26,7 +26,7 @@ start/stop:
 `cn start` `cn stop`
 
 uninstall:
-`bash uninstall.sh`
+`curl -fsSL https://raw.githubusercontent.com/castluno/cmus-notifier/main/uninstall.sh | bash`
 
 
 ##### license
