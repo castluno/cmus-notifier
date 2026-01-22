@@ -12,7 +12,7 @@ if [ ! -d /data/data/com.termux ]; then
 fi
 
 # installing packages
-pkg install -y cmus git
+pkg install -y cmus git termux-api
 
 rm -rf cmus-notifier
 git clone https://github.com/castluno/cmus-notifier
