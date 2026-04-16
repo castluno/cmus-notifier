@@ -4,9 +4,10 @@
 ID=9685
 BAR_LENGTH=20 # scale length (in symbols)
 UPDATE_INTERVAL=3 # notification update interval (default: 3)
+EXID=4728
 
 PREV_TEXT='Prev'
-PAUSE_TEXT='Pause/Play'
+PAUS_TEXT='Pause/Play'
 NEXT_TEXT='Next'
 
 start_time=$(date +%s)
@@ -14,7 +15,13 @@ start_time=$(date +%s)
 while true; do
     INFO=$(cmus-remote -Q 2>/dev/null)
     if [ $? -ne 0 ]; then
-        termux-notification --icon music_note --alert-once --ongoing --id $ID --title "cmus" --content "cmus is not running" --priority max
+
+        termux-notification \
+            --alert-once --ongoing --priority max --id $ID \
+            --icon music_note \
+            --title "cmus" \
+            --content "cmus is not running"
+
         sleep $UPDATE_INTERVAL
         continue
     fi
@@ -44,16 +51,32 @@ while true; do
     fi
 
     case "$status" in
-        playing) icon="music_note";; # notification icon when music is playing
+        playing) icon="music_note";;         # notification icon when music is playing
         paused) icon="pause_circle_filled";; # notification icon when music is paused
-        stopped) icon="stop_circle";; # notification icon when music is stopped
-        *) icon="music_note";; # notification icon when the script has not received enough information
+        stopped) icon="stop_circle";;        # notification icon when music is stopped
+        *) icon="music_note";;               # notification icon when the script has not received enough information
     esac
 
-    notif_content="$artist - $album\n$bar $pos_fmt/$dur_fmt" # notification content format
+    content1="$artist - $album"
+    content2="$bar $pos_fmt/$dur_fmt"
 
-    cmd="termux-notification --icon $icon --alert-once --ongoing --id $ID --title '$title' --content $'$notif_content' --button1 '$PREV_TEXT' --button2 '$PAUSE_TEXT' --button3 '$NEXT_TEXT' --button1-action 'cmus-remote --prev' --button2-action 'cmus-remote --pause' --button3-action 'cmus-remote --next' --priority max"
-    eval "$cmd"
+    #cmd="termux-notification --icon $icon --alert-once --ongoing --id $EXID --title '$title' --content $'$notif_content' --button1 '$PREV_TEXT' --button2 '$PAUSE_TEXT' --button3 '$NEXT_TEXT' --button1-action 'cmus-remote --prev' --button2-action 'cmus-remote --pause' --button3-action 'cmus-remote --next' --priority max"
+    #eval "$cmd"
+
+    # выше закомментирован старый и опасный метод вывода уведомления, которые более не обновляется.
+    # опасный он потому, что если автор трека укажет в названии опасную команду,
+    # то она выполнится, и может повредить ваши файлы. а ещё этот метод медленный и не красивый.
+    # хотите использовать его - только на свой страх и риск.
+
+
+    termux-notification \
+        --icon    $icon \
+        --title   "$title" \
+        --content "$content1"$'\n'"$content2" \
+        --button1 "$PREV_TEXT"  --button1-action 'cmus-remote --prev' \
+        --button2 "$PAUS_TEXT"  --button2-action 'cmus-remote --pause' \
+        --button3 "$NEXT_TEXT"  --button3-action 'cmus-remote --next' \
+        --alert-once --ongoing --priority max --id $ID
 
     sleep $UPDATE_INTERVAL
 done
