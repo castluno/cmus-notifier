@@ -2,6 +2,7 @@
 
 background notification controller for cmus in Termux.
 
+![example](example.png)
 
 ##### features
 - persistent notification with track info
