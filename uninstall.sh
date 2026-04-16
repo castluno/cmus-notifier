@@ -5,11 +5,7 @@ echo
 echo 'uninstalling cmus-notifier...'
 
 rm -rf "$HOME/.cn-dont-delete"
+rm "$PREFIX/bin/cn"
 
-ALIAS='alias cn="bash ~/.cn-dont-delete/controller.sh"'
-
-sed -i "\|$ALIAS|d" "$HOME/.bashrc"
-sed -i "\|$ALIAS|d" "$HOME/.zshrc"
-
-echo 'uninstalled. restart the terminal.'
+echo 'uninstalled.'
 echo
