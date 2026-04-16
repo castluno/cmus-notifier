@@ -1,22 +1,21 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 script="$HOME/.cn-dont-delete/notifier.sh"
-pidfile="$HOME/.cn-dont-delete/notifier.pid"
+pidfile="$HOME/.cn-dont-delete/cn.pid"
 
 start() {
     if [[ -f "$pidfile" ]] && kill -0 "$(cat "$pidfile")" 2>/dev/null; then
-        echo "Already running"
+        echo "already running"
         exit 0
     fi
 
     (
-        echo $$ > "$pidfile"
-        echo "Started"
+        echo $(($$ + 1)) > "$pidfile"
+        echo "started"
 
         trap 'cleanup' SIGINT SIGTERM
 
         cleanup() {
-            echo "Stopping..."
             [[ -n "$child" ]] && kill "$child" 2>/dev/null
             rm -f "$pidfile"
             exit 0
@@ -37,20 +36,21 @@ start() {
 
 stop() {
     if [[ ! -f "$pidfile" ]]; then
-        echo "Not running"
+        echo "not running"
         exit 0
     fi
 
     pid=$(cat "$pidfile")
     kill "$pid" 2>/dev/null
     rm -f "$pidfile"
-    echo "Stopped"
+    echo "stopped"
 }
 
 case "$1" in
     start) start ;;
     stop) stop ;;
     *)
-        echo "Usage: cn {start|stop}"
+        echo "usage: cn {start|stop}"
+        echo "v0.2.1"
     ;;
 esac
