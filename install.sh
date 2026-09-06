@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -e
 
-TMP="$HOME/.cn-tmp"
+TMP="$HOME/.cn-dont-delete/tmp"
 CN="$HOME/.cn-dont-delete"
 
 echo
