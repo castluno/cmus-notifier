@@ -1,1 +1,0 @@
-﻿do not delete this directory, because this directory contains important files of the cmus-notifier.
